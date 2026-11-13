@@ -1,0 +1,33 @@
+baseURL = "https://www.multichamber.dev/"
+locale = "en"
+title = "MultiChamber"
+enableRobotsTXT = true
+# Placeholder: only the home page and the 404 page are built.
+disableKinds = ["page", "section", "taxonomy", "term", "rss", "sitemap"]
+# No generator meta tag, no git info lookups that could leak local details.
+disableHugoGeneratorInject = true
+enableGitInfo = false
+
+[outputs]
+  home = ["html"]
+
+[markup.goldmark.renderer]
+  unsafe = false
+
+# Hugo's built-in embeds and analytics stay off.
+[privacy]
+  [privacy.disqus]
+    disable = true
+  [privacy.googleAnalytics]
+    disable = true
+  [privacy.instagram]
+    disable = true
+  [privacy.x]
+    disable = true
+  [privacy.vimeo]
+    disable = true
+  [privacy.youtube]
+    disable = true
+
+[services.googleAnalytics]
+  ID = ""

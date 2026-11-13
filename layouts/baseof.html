@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="{{ site.Language.Locale }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {{- /* No scripts, no third-party requests. GitHub Pages cannot send headers, so the policy is a meta tag. */}}
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <meta name="color-scheme" content="light dark">
+  <title>{{ site.Title }}</title>
+  <link rel="canonical" href="{{ .Permalink }}">
+  {{- with resources.Get "css/site.css" | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
+  {{- end }}
+</head>
+<body>
+  <main class="hold">
+    {{ block "main" . }}{{ end }}
+  </main>
+</body>
+</html>

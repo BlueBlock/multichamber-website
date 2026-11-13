@@ -1,0 +1,13 @@
+# Gitleaks config for the working-tree scan in scripts/Test-Site.ps1.
+# Default rules, minus folders that hold build output or downloaded tools.
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Build output, Hugo cache, pinned tool downloads and git internals"
+paths = [
+  '''(^|[\\/])\.git[\\/]''',
+  '''(^|[\\/])public[\\/]''',
+  '''(^|[\\/])resources[\\/]''',
+  '''(^|[\\/])\.tools[\\/]''',
+]

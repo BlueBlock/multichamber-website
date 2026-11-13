@@ -1,0 +1,33 @@
+/* Placeholder page. System fonts only, no external requests. */
+:root {
+  --bg: #f7f8f8;
+  --text: #15191b;
+  --muted: #4f5a5e;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #090c0d;
+    --text: #e3e8e9;
+    --muted: #9aa6aa;
+  }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+.hold {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  text-align: center;
+}
+h1 { margin: 0; font-size: clamp(2rem, 8vw, 3.5rem); line-height: 1.1; letter-spacing: -0.02em; }
+p { margin: 12px 0 0; color: var(--muted); font-size: 1.15rem; }

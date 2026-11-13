@@ -1,0 +1,54 @@
+name: Site
+
+# Checks every push and pull request with the same script used locally.
+# Deploys to GitHub Pages from main only when the repository variable PAGES_ENABLED is "true",
+# so nothing is published until Pages is switched on. No tokens or secrets are needed: the
+# deploy uses the workflow's own short-lived OIDC token.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: site-${{ github.ref }}
+  # Cancel superseded pull-request checks, but let runs on main (and their deploys) finish.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0          # Gitleaks and the identity check read the whole history.
+          persist-credentials: false
+      - name: Build and check
+        shell: pwsh
+        run: ./scripts/Test-Site.ps1
+      - name: Upload site
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.PAGES_ENABLED == 'true'
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: public
+
+  deploy:
+    needs: check
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.PAGES_ENABLED == 'true'
+    runs-on: ubuntu-24.04
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

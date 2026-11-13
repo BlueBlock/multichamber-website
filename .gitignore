@@ -1,0 +1,17 @@
+node_modules/
+dist/
+build/
+.cache/
+.env
+.env.*
+*.log
+.DS_Store
+Thumbs.db
+
+# Hugo output and pinned tools
+public/
+resources/_gen/
+.hugo_build.lock
+.tools/
+# Local-only content-scan patterns (never commit)
+.content-scan.local.txt
